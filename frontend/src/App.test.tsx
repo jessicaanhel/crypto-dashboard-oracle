@@ -1,9 +1,18 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
 import App from './App';
+import { theme } from './theme/theme';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('renders the dashboard overview by default', () => {
+  render(
+    <ThemeProvider theme={theme}>
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    </ThemeProvider>,
+  );
+  expect(screen.getByRole('heading', { name: /Overview — Smart Money Flow/i })).toBeInTheDocument();
+  expect(screen.getByText('Oracle')).toBeInTheDocument();
 });

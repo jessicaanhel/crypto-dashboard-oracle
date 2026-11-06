@@ -1,42 +1,44 @@
-import { createTheme } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
+import { COLORS } from './tokens';
 
 export const theme = createTheme({
   palette: {
+    mode: 'dark',
     common: {
-      black: '#121213',
+      black: COLORS.background,
       white: '#ffffff',
     },
+    background: {
+      default: COLORS.background,
+      paper: COLORS.surface,
+    },
     primary: {
-      light: '#0057B8',
-      main: '#FFD700',
+      main: COLORS.accent,
+      light: '#8fa8ff',
+      dark: '#3d5fd9',
+      contrastText: COLORS.background,
     },
-    chartColor: {
-      light: '#FE4A49',
-      main: '#2AB7CA',
-      dark: '#FED766',
-      contrastText: '#121213',
+    secondary: {
+      main: '#8f6bff',
+      light: COLORS.large,
+      dark: '#6b4fd9',
+      contrastText: COLORS.background,
     },
-    neutral: {
-      main: 'transparent',
-      contrastText: '#121213',
+    success: {
+      main: COLORS.positive,
+      contrastText: COLORS.background,
     },
-    grey: {
-      '100': '#f1ff1f',
+    error: {
+      main: COLORS.negative,
+      contrastText: COLORS.background,
+    },
+    text: {
+      primary: COLORS.textPrimary,
+      secondary: COLORS.textSecondary,
     },
   },
   typography: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: "'Manrope', system-ui, sans-serif",
   },
+  spacing: 8,
 });
-
-declare module '@mui/material/styles' {
-  interface Palette {
-    neutral: Palette['primary'];
-    chartColor: Palette['primary'];
-  }
-
-  interface PaletteOptions {
-    neutral?: PaletteOptions['primary'];
-    chartColor?: Palette['primary'];
-  }
-}

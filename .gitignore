@@ -6,11 +6,20 @@ frontend/node_modules
 .pnp.js
 /.prettierrc
 
+# python
+backend/__pycache__/
+**/__pycache__/
+*.pyc
+backend/venv/
+backend/.venv/
+.venv/
+
 # testing
 /coverage
 
 # production
 /build
+frontend/build
 
 # misc
 .DS_Store
@@ -26,3 +35,5 @@ yarn-error.log*
 .env
 .idea
 backend/apis/bitquery/orders.py
+node_modules/
+SPEC.md

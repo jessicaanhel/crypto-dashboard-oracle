@@ -1,22 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
+import { apiFetch } from '../utils/api';
+import { DataSource } from '../utils/dataSource';
 
-export const useApi = (url: string) => {
-  const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+export const useApi = <T = any,>(endpoint: string, options: { enabled?: boolean } = {}) => {
+  const { enabled = true } = options;
+  const [data, setData] = useState<T | null>(null);
+  const [source, setSource] = useState<DataSource | null>(null);
+  const [loading, setLoading] = useState(enabled);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch(url)
-      .then(res => res.json())
-      .then(result => {
-        setData(result);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError("Failed to load data");
-        setLoading(false);
-      });
-  }, [url]);
+    if (!enabled) return;
 
-  return { data, loading, error };
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await apiFetch(endpoint);
+        if (!res.ok) throw new Error('Network response was not ok');
+        const json = await res.json();
+        setData(json);
+        setSource((res.headers.get('X-Data-Source') as DataSource | null) ?? null);
+        setError(null);
+      } catch (err) {
+        setError('Failed to load data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [endpoint, enabled]);
+
+  return { data, source, loading, error };
 };

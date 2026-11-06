@@ -1,53 +1,91 @@
-# Getting Started with Analytical Dashboard CROCO digital
+# Ask the Oracle
 
+Crypto analytics dashboard: where the big money moves, what the market is doing today, and a
+small chat assistant (the Oracle) you can ask about it.
 
-## Run the Project
+![Overview tab](docs/overview.webp)
 
-1. Install requirements:
-`
-pip3 install -r backend/requirements.txt
-frontend/npm install
-`
-2. In the project directory, run:
+React + TypeScript frontend, Flask backend. Market data comes from public APIs (CoinGecko,
+Binance, Frankfurter); when a source is down the backend falls back to mock data and the UI marks
+every widget as `live` or `mock`, so you allways know what you are looking at.
 
-### `python backend/app.py`
+## Run it in 5 minutes
 
-Runs backend of application in python 3.13.\
-Open [http://127.0.0.1:5000](http://127.0.0.1:5000/api/blackrock) to view in the browser.
+You need **Python 3.11+** and **Node 18+**. No API keys, no database.
 
-### `frontend/npm start`
+```bash
+git clone https://github.com/jessicaanhel/crypto-dashboard-oracle.git
+cd crypto-dashboard-oracle
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Terminal 1, backend** (http://127.0.0.1:5000):
 
-3. The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+cd backend
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+python app.py
+```
 
-## Available Scripts
+**Terminal 2, frontend** (http://localhost:3000):
 
-### `frontend/npm test`
+```bash
+cd frontend
+npm ci
+npm start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Open **http://localhost:3000**. The frontend proxies `/api` to the backend, so there is nothing
+else to configure.
 
-### `frontend/npm run build`
+On macOS `./run.sh` from the repo root opens both in two Terminal windows (after the installs).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### The Oracle
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Works without any key, it then answers from the live data in demo mode. For real AI answers
+set one of these before `python app.py`:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+export GEMINI_API_KEY=...      # free tier, key from aistudio.google.com
+export ANTHROPIC_API_KEY=...   # Claude, paid
+```
 
-##
+Or run a local model with [Ollama](https://ollama.com) (`ollama pull llama3.2`), the backend
+finds it on its own. Order it tries: Gemini → Claude → Ollama → demo, change it with
+`ORACLE_PROVIDERS=ollama,gemini`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## What you'll see
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+| Tab | What it shows | Data |
+|---|---|---|
+| Overview | Smart money KPIs, ETF flows, futures (open interest, funding) | futures live, rest mock |
+| Smart Money | BlackRock BTC/ETH holdings and history, whale transfers, exchange flows | holdings priced live |
+| Crypto | Prices, 24h change, volume, market cap, smart flow score | live |
+| Fiat rates | EUR/USD/PLN/UAH pairs and bank buy/sell rates | live |
+| Personal PnL | PnL per trading platform | mock |
+| Watchlist | Price alerts you can arm/pause | mock |
+| Ask the Oracle | Chat about crypto, with the live market data as context | live |
 
-# About Project
+## Under the hood
 
-The project presents data on the losses of Russian artillery for 3 selected months. (source: Ministry of Defense of Ukraine https://www.mil.gov.ua/)
+- **Frontend:** React 18, TypeScript, React Router. Charts are plain SVG components, no chart
+  library.
+- **Backend:** Flask blueprints (routes only) → services (live data, fallbacks, cache) →
+  scrapers. Every response carries an `X-Data-Source: live | mock | partial` header.
+- **Oracle:** one `Provider` interface with Gemini, Claude, Ollama and demo implementations,
+  tried in order until one answers (so a used up free quota just falls back). The backend adds
+  current prices and futures to every question and streams the answer as plain text.
+- **Quality:** pytest + Jest, black/isort/flake8/prettier via pre-commit, GitHub Actions runs the
+  tests and the production build on every PR.
 
-Created 2 types of charts. On the HomePage you can create new graph visualizations by adding the required arguments.
+```
+backend/   api/  services/  scrapers/  data/ (mock)  scripts/ (one-off tools)  tests/  deploy/
+frontend/  src/pages/  src/components/  src/context/  src/hooks/  src/theme/
+```
+
+Running the tests:
+
+```bash
+cd backend && pip install -r requirements-dev.txt && python -m pytest
+cd frontend && npm test -- --watchAll=false
+```

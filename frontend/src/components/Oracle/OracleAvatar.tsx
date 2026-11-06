@@ -1,6 +1,6 @@
 import React from 'react';
 
-// Colours picked from the BrownBro logo
+// Colours picked from the app logo
 const BODY = '#f2ab8c';
 const BODY_SHADE = '#e3906f';
 const HORN = '#d8836a';
@@ -35,7 +35,7 @@ interface OracleAvatarProps {
   talking?: boolean;
 }
 
-// Market Oracle: the BrownBro monster (three eyes, horns, two fangs), drawn as an animated SVG
+// Market Oracle: the app's monster mascot (three eyes, horns, two fangs), drawn as an animated SVG
 export const OracleAvatar: React.FC<OracleAvatarProps> = ({ size = 64, talking = false }) => (
   <svg
     width={size}
@@ -96,7 +96,7 @@ export const OracleAvatar: React.FC<OracleAvatarProps> = ({ size = 64, talking =
         <circle cx="45" cy="59.5" r="4.4" fill={DARK} />
         <circle cx="75" cy="59.5" r="4.4" fill={DARK} />
       </g>
-      {/* Heavy eyelids give the grumpy BrownBro look */}
+      {/* Heavy eyelids give the grumpy look from the logo */}
       <path d="M33 47l23 7v-8z" fill={BODY_SHADE} />
       <path d="M87 47l-23 7v-8z" fill={BODY_SHADE} />
 

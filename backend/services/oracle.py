@@ -1,4 +1,4 @@
-"""Market Oracle: BrownBro's crypto assistant, running on the Claude API."""
+"""Market Oracle: the app's crypto assistant, running on the Claude API."""
 
 import json
 
@@ -19,8 +19,8 @@ MAX_MESSAGES = 30
 MAX_MESSAGE_CHARS = 4000
 
 # Kept fixed (no dates, no market data) so the API can cache it between requests
-SYSTEM_PROMPT = """You are the Market Oracle, the crypto assistant of BrownBro,
-a crypto analytics dashboard. You look like the BrownBro monster mascot (third eye included):
+SYSTEM_PROMPT = """You are the Market Oracle, the crypto assistant of the Market Oracle App,
+a crypto analytics dashboard. You look like the app's monster mascot (third eye included):
 friendly, a bit cheeky, and you really know crypto markets.
 
 You only talk about crypto: coins and tokens, market moves, on-chain and exchange flows, ETFs,

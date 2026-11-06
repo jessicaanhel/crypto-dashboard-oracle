@@ -20,8 +20,8 @@ export const Oracle: React.FC = () => {
           Market Oracle
         </div>
         <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 6, lineHeight: 1.6 }}>
-          BrownBro's crypto assistant. It reads the live market data behind this dashboard, so ask
-          it about price moves, flows, futures or any crypto term. It's also in the corner of every
+          The app's crypto assistant. It reads the live market data behind this dashboard, so ask it
+          about price moves, flows, futures or any crypto term. It's also in the corner of every
           page.
         </div>
         <div style={{ fontSize: 11, color: COLORS.textMuted, marginTop: 14 }}>

@@ -14,5 +14,5 @@ test('renders the dashboard overview by default', () => {
     </ThemeProvider>,
   );
   expect(screen.getByRole('heading', { name: /Overview — Smart Money Flow/i })).toBeInTheDocument();
-  expect(screen.getByText('BrownBro')).toBeInTheDocument();
+  expect(screen.getByText('Market Oracle App')).toBeInTheDocument();
 });

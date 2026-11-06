@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { apiFetch } from '../utils/api';
 
@@ -12,6 +12,8 @@ interface OracleContextValue {
   streaming: boolean;
   error: string | null;
   widgetOpen: boolean;
+  // Which model answers: "gemini", "anthropic", "ollama" or "demo"
+  provider: string | null;
   setWidgetOpen: (open: boolean) => void;
   send: (text: string) => Promise<void>;
   clear: () => void;
@@ -27,6 +29,15 @@ export const OracleProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [streaming, setStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [widgetOpen, setWidgetOpen] = useState(false);
+  const [provider, setProvider] = useState<string | null>(null);
+
+  // Ask once which model is active, so the UI can say "demo mode" before the first question
+  useEffect(() => {
+    apiFetch('/api/oracle/status')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((status) => status && setProvider(status.provider))
+      .catch(() => setProvider(null));
+  }, []);
   const location = useLocation();
 
   const send = useCallback(
@@ -54,6 +65,10 @@ export const OracleProvider: React.FC<{ children: React.ReactNode }> = ({ childr
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ messages: history, page: location.pathname }),
         });
+
+        // The backend can fall back to another model (e.g. free quota used up), so trust the header
+        const answeredBy = res.headers.get('X-Oracle-Provider');
+        if (answeredBy) setProvider(answeredBy);
 
         if (!res.ok || !res.body) {
           const body = await res.json().catch(() => null);
@@ -86,12 +101,22 @@ export const OracleProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   return (
     <OracleContext.Provider
-      value={{ messages, streaming, error, widgetOpen, setWidgetOpen, send, clear }}
+      value={{ messages, streaming, error, widgetOpen, setWidgetOpen, provider, send, clear }}
     >
       {children}
     </OracleContext.Provider>
   );
 };
+
+const PROVIDER_LABELS: Record<string, string> = {
+  gemini: 'Google Gemini',
+  anthropic: 'Claude',
+  ollama: 'a local model (Ollama)',
+  demo: 'demo answers, no AI model',
+};
+
+export const providerLabel = (provider: string | null) =>
+  provider ? PROVIDER_LABELS[provider] ?? provider : 'loading…';
 
 export const useOracle = () => {
   const context = useContext(OracleContext);

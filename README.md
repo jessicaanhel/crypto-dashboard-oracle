@@ -3,6 +3,8 @@
 Crypto analytics dashboard: where the big money moves, what the market is doing today, and a
 small chat assistant (the Oracle) you can ask about it.
 
+![Overview tab](docs/overview.webp)
+
 React + TypeScript frontend, Flask backend. Market data comes from public APIs (CoinGecko,
 Binance, Frankfurter); when a source is down the backend falls back to mock data and the UI marks
 every widget as `live` or `mock`, so you allways know what you are looking at.

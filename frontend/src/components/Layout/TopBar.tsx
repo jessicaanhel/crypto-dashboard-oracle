@@ -3,13 +3,18 @@ import { useLocation } from 'react-router-dom';
 import { COLORS } from '../../theme/tokens';
 import { SegmentedControl, TimeRange } from '../UI/SegmentedControl';
 
-const VIEW_CONFIG: Record<string, { title: string; showTimeRange: boolean; live?: boolean }> = {
+// noDataSource: no live/mock feed on the page (the chat), so hide that line
+const VIEW_CONFIG: Record<
+  string,
+  { title: string; showTimeRange: boolean; live?: boolean; noDataSource?: boolean }
+> = {
   '/': { title: 'Overview — Smart Money Flow', showTimeRange: true },
   '/smart-money': { title: 'Smart Money by Institution', showTimeRange: false },
   '/crypto': { title: 'Crypto Markets', showTimeRange: true, live: true },
   '/fiat': { title: 'Fiat & Currency Rates', showTimeRange: true, live: true },
   '/personal-pnl': { title: 'Personal PnL', showTimeRange: true },
   '/watchlist': { title: 'Watchlist & Alerts', showTimeRange: false },
+  '/oracle': { title: 'Market Oracle', showTimeRange: false, noDataSource: true },
   '/settings': { title: 'Settings', showTimeRange: false },
 };
 
@@ -43,21 +48,23 @@ export const TopBar: React.FC<TopBarProps> = ({ timeRange, onTimeRangeChange }) 
         >
           {config.title}
         </h2>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 6 }}>
-          <span
-            style={{
-              width: 6,
-              height: 6,
-              borderRadius: '50%',
-              background: config.live ? COLORS.accent : COLORS.positive,
-              display: 'inline-block',
-              boxShadow: `0 0 6px ${config.live ? COLORS.accent : COLORS.positive}`,
-            }}
-          />
-          <span style={{ fontSize: 12, color: COLORS.textMuted }}>
-            {config.live ? 'Live data' : 'Mock data · wire a real feed in Settings'}
-          </span>
-        </div>
+        {!config.noDataSource && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 6 }}>
+            <span
+              style={{
+                width: 6,
+                height: 6,
+                borderRadius: '50%',
+                background: config.live ? COLORS.accent : COLORS.positive,
+                display: 'inline-block',
+                boxShadow: `0 0 6px ${config.live ? COLORS.accent : COLORS.positive}`,
+              }}
+            />
+            <span style={{ fontSize: 12, color: COLORS.textMuted }}>
+              {config.live ? 'Live data' : 'Mock data · wire a real feed in Settings'}
+            </span>
+          </div>
+        )}
       </div>
       {config.showTimeRange && <SegmentedControl value={timeRange} onChange={onTimeRangeChange} />}
     </div>

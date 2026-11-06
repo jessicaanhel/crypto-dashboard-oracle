@@ -79,6 +79,16 @@ const NAV_ITEMS: NavItem[] = [
     ),
   },
   {
+    to: '/oracle',
+    label: 'Ask the Oracle',
+    icon: (
+      <svg {...iconProps}>
+        <path d="M4 5h16v11H9l-5 4z" />
+        <path d="M9 10.5h.01M12 10.5h.01M15 10.5h.01" />
+      </svg>
+    ),
+  },
+  {
     to: '/settings',
     label: 'Settings',
     icon: (

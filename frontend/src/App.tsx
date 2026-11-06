@@ -7,6 +7,7 @@ import CryptoMarkets from './pages/CryptoMarkets';
 import FiatRates from './pages/FiatRates';
 import PersonalPnl from './pages/PersonalPnl';
 import Watchlist from './pages/Watchlist';
+import Oracle from './pages/Oracle';
 import SettingsPage from './pages/SettingsPage';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/fiat" element={<FiatRates />} />
         <Route path="/personal-pnl" element={<PersonalPnl />} />
         <Route path="/watchlist" element={<Watchlist />} />
+        <Route path="/oracle" element={<Oracle />} />
         <Route path="/settings" element={<SettingsPage />} />
       </Route>
     </Routes>

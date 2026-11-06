@@ -1,6 +1,7 @@
 from api.crypto import crypto_bp
 from api.fiat import fiat_bp
 from api.institutions import institutions_bp
+from api.oracle import oracle_bp
 from api.overview import overview_bp
 from api.personal_pnl import personal_pnl_bp
 from api.settings import settings_bp
@@ -16,6 +17,7 @@ BLUEPRINTS = [
     personal_pnl_bp,
     watchlist_bp,
     settings_bp,
+    oracle_bp,
 ]
 
 

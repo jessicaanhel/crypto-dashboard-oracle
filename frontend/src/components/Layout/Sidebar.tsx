@@ -79,6 +79,16 @@ const NAV_ITEMS: NavItem[] = [
     ),
   },
   {
+    to: '/oracle',
+    label: 'Ask the Oracle',
+    icon: (
+      <svg {...iconProps}>
+        <path d="M4 5h16v11H9l-5 4z" />
+        <path d="M9 10.5h.01M12 10.5h.01M15 10.5h.01" />
+      </svg>
+    ),
+  },
+  {
     to: '/settings',
     label: 'Settings',
     icon: (
@@ -110,7 +120,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggleCollapsed }
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 20px 24px' }}>
       <img
         src={logo}
-        alt="BrownBro"
+        alt="Ask the Oracle"
         style={{
           width: 32,
           height: 32,
@@ -121,7 +131,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggleCollapsed }
       />
       {!collapsed && (
         <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: 18 }}>
-          BrownBro
+          Oracle
         </span>
       )}
     </div>

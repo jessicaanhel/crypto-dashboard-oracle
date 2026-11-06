@@ -4,10 +4,8 @@
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
-    "@mui/icons-material": "^5.10.9",
+    "@emotion/styled": "^11.14.1",
     "@mui/material": "^5.10.9",
-    "@mui/styled-engine-sc": "^5.10.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -15,17 +13,12 @@
     "@types/node": "^16.11.65",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
-    "chart.js": "^3.9.1",
     "eslint": "^8.25.0",
     "nth-check": "^2.1.1",
-    "plotly.js": "^3.1.2",
     "react": "^18.2.0",
-    "react-chartjs-2": "^4.3.1",
     "react-dom": "^18.2.0",
-    "react-plotly.js": "^2.6.0",
     "react-router-dom": "^7.18.2",
     "react-scripts": "^5.0.1",
-    "styled-components": "^5.3.6",
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4"
   },
@@ -43,7 +36,6 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "^react-plotly\\.js$": "<rootDir>/src/__mocks__/reactPlotlyMock.js",
       "^react-router/dom$": "<rootDir>/node_modules/react-router/dist/development/dom-export.js"
     }
   },
@@ -60,15 +52,7 @@
     ]
   },
   "devDependencies": {
-    "@types/plotly.js": "^3.0.7",
-    "@types/react-plotly.js": "^2.6.3",
-    "@types/styled-components": "^5.1.35",
-    "autoprefixer": "^10.4.21",
-    "lightweight-charts": "^5.0.9",
-    "npm": "^11.6.2",
-    "postcss": "^8.5.6",
-    "prettier": "2.7.1",
-    "tailwindcss": "^4.1.16"
+    "prettier": "2.7.1"
   },
   "proxy": "http://127.0.0.1:5000"
 }

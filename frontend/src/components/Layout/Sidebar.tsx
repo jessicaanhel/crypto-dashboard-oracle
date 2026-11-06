@@ -120,7 +120,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggleCollapsed }
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 20px 24px' }}>
       <img
         src={logo}
-        alt="Market Oracle App"
+        alt="Ask the Oracle"
         style={{
           width: 32,
           height: 32,
@@ -131,7 +131,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggleCollapsed }
       />
       {!collapsed && (
         <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: 18 }}>
-          Market Oracle App
+          Oracle
         </span>
       )}
     </div>

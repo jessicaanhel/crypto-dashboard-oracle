@@ -56,8 +56,8 @@ export const OracleChat: React.FC<OracleChatProps> = ({ compact = false }) => {
           <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
             <OracleAvatar size={34} />
             <div style={bubbleStyle('assistant')}>
-              Hi, I'm the Market Oracle. Ask me anything about crypto: prices, flows, futures or
-              what the numbers on this dashboard mean.
+              Hi, I'm the Oracle. Ask me anything about crypto: prices, flows, futures or what the
+              numbers on this dashboard mean.
             </div>
           </div>
         )}

@@ -35,14 +35,14 @@ interface OracleAvatarProps {
   talking?: boolean;
 }
 
-// Market Oracle: the app's monster mascot (three eyes, horns, two fangs), drawn as an animated SVG
+// The Oracle: the app's monster mascot (three eyes, horns, two fangs), drawn as an animated SVG
 export const OracleAvatar: React.FC<OracleAvatarProps> = ({ size = 64, talking = false }) => (
   <svg
     width={size}
     height={size}
     viewBox="0 0 120 120"
     role="img"
-    aria-label="Market Oracle"
+    aria-label="Ask the Oracle"
     style={{ display: 'block', flexShrink: 0 }}
   >
     <style>{ANIMATIONS}</style>

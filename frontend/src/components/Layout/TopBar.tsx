@@ -14,7 +14,7 @@ const VIEW_CONFIG: Record<
   '/fiat': { title: 'Fiat & Currency Rates', showTimeRange: true, live: true },
   '/personal-pnl': { title: 'Personal PnL', showTimeRange: true },
   '/watchlist': { title: 'Watchlist & Alerts', showTimeRange: false },
-  '/oracle': { title: 'Market Oracle', showTimeRange: false, noDataSource: true },
+  '/oracle': { title: 'Ask the Oracle', showTimeRange: false, noDataSource: true },
   '/settings': { title: 'Settings', showTimeRange: false },
 };
 

@@ -1,13 +1,13 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { useOracle } from '../../context/OracleContext';
+import { providerLabel, useOracle } from '../../context/OracleContext';
 import { COLORS, RADIUS } from '../../theme/tokens';
 import { OracleAvatar } from './OracleAvatar';
 import { OracleChat } from './OracleChat';
 
 // Floating Oracle in the corner of every page; opens a small chat panel
 export const OracleWidget: React.FC = () => {
-  const { widgetOpen, setWidgetOpen, streaming } = useOracle();
+  const { widgetOpen, setWidgetOpen, streaming, provider } = useOracle();
   const { pathname } = useLocation();
 
   // The Oracle page already shows the full chat
@@ -18,7 +18,7 @@ export const OracleWidget: React.FC = () => {
       {widgetOpen && (
         <div
           role="dialog"
-          aria-label="Chat with the Market Oracle"
+          aria-label="Ask the Oracle"
           style={{
             position: 'absolute',
             right: 0,
@@ -47,9 +47,9 @@ export const OracleWidget: React.FC = () => {
           >
             <OracleAvatar size={36} talking={streaming} />
             <div style={{ flex: 1 }}>
-              <div style={{ fontWeight: 700, fontSize: 14 }}>Market Oracle</div>
+              <div style={{ fontWeight: 700, fontSize: 14 }}>Ask the Oracle</div>
               <div style={{ fontSize: 11, color: COLORS.textMuted }}>
-                {streaming ? 'typing…' : 'Crypto assistant'}
+                {streaming ? 'typing…' : `Crypto assistant · ${providerLabel(provider)}`}
               </div>
             </div>
             <button

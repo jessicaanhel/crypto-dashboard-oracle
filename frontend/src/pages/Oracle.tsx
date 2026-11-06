@@ -2,11 +2,11 @@ import React from 'react';
 import { Card } from '../components/UI/Card';
 import { OracleAvatar } from '../components/Oracle/OracleAvatar';
 import { OracleChat } from '../components/Oracle/OracleChat';
-import { useOracle } from '../context/OracleContext';
+import { providerLabel, useOracle } from '../context/OracleContext';
 import { COLORS } from '../theme/tokens';
 
 export const Oracle: React.FC = () => {
-  const { streaming } = useOracle();
+  const { streaming, provider } = useOracle();
 
   return (
     <div
@@ -17,7 +17,7 @@ export const Oracle: React.FC = () => {
           <OracleAvatar size={150} talking={streaming} />
         </div>
         <div style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: 20 }}>
-          Market Oracle
+          Ask the Oracle
         </div>
         <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 6, lineHeight: 1.6 }}>
           The app's crypto assistant. It reads the live market data behind this dashboard, so ask it
@@ -25,7 +25,7 @@ export const Oracle: React.FC = () => {
           page.
         </div>
         <div style={{ fontSize: 11, color: COLORS.textMuted, marginTop: 14 }}>
-          Runs on Claude. Not financial advice.
+          Running on {providerLabel(provider)}. Not financial advice.
         </div>
       </Card>
 

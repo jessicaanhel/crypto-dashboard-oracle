@@ -1,7 +1,7 @@
-# Market Oracle App
+# Ask the Oracle
 
 Crypto analytics dashboard: where the big money moves, what the market is doing today, and a
-small chat assistant (the Market Oracle) you can ask about it.
+small chat assistant (the Oracle) you can ask about it.
 
 React + TypeScript frontend, Flask backend. Market data comes from public APIs (CoinGecko,
 Binance, Frankfurter); when a source is down the backend falls back to mock data and the UI marks
@@ -38,22 +38,19 @@ else to configure.
 
 On macOS `./run.sh` from the repo root opens both in two Terminal windows (after the installs).
 
-### Optional: the Market Oracle
+### The Oracle
 
-The chat assistant needs an Anthropic API key. Without it the dashboard works fine and the Oracle
-just shows as offline.
+Works without any key, it then answers from the live data in demo mode. For real AI answers
+set one of these before `python app.py`:
 
 ```bash
-export ANTHROPIC_API_KEY=sk-ant-...   # before `python app.py`
+export GEMINI_API_KEY=...      # free tier, key from aistudio.google.com
+export ANTHROPIC_API_KEY=...   # Claude, paid
 ```
 
-### If something doesn't start
-
-- **Port 3000 is busy:** run the frontend on another port, `PORT=3001 npm start`.
-- **Port 5000 is busy on macOS:** that's usually AirPlay Receiver. The backend binds to
-  `127.0.0.1` so it normally still works; if not, switch AirPlay Receiver off in
-  System Settings → General → AirDrop & Handoff.
-- **Lots of "mock" tags:** the public APIs rate limit now and then, wait a minute and refresh.
+Or run a local model with [Ollama](https://ollama.com) (`ollama pull llama3.2`), the backend
+finds it on its own. Order it tries: Gemini → Claude → Ollama → demo, change it with
+`ORACLE_PROVIDERS=ollama,gemini`.
 
 ## What you'll see
 
@@ -65,7 +62,7 @@ export ANTHROPIC_API_KEY=sk-ant-...   # before `python app.py`
 | Fiat rates | EUR/USD/PLN/UAH pairs and bank buy/sell rates | live |
 | Personal PnL | PnL per trading platform | mock |
 | Watchlist | Price alerts you can arm/pause | mock |
-| Ask the Oracle | Chat about crypto, with the live market data as context | needs API key |
+| Ask the Oracle | Chat about crypto, with the live market data as context | live |
 
 ## Under the hood
 
@@ -73,8 +70,9 @@ export ANTHROPIC_API_KEY=sk-ant-...   # before `python app.py`
   library.
 - **Backend:** Flask blueprints (routes only) → services (live data, fallbacks, cache) →
   scrapers. Every response carries an `X-Data-Source: live | mock | partial` header.
-- **Oracle:** streams the answer to the browser as plain text. The backend adds current prices
-  and futures to each question, so answers are based on real numbers.
+- **Oracle:** one `Provider` interface with Gemini, Claude, Ollama and demo implementations,
+  tried in order until one answers (so a used up free quota just falls back). The backend adds
+  current prices and futures to every question and streams the answer as plain text.
 - **Quality:** pytest + Jest, black/isort/flake8/prettier via pre-commit, GitHub Actions runs the
   tests and the production build on every PR.
 

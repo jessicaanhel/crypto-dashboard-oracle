@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 def get_velobank_rates():
     url = "https://www.velobank.pl/bankowosc-premium/kursy-walut#pieniadze"
     headers = {"User-Agent": "Mozilla/5.0"}
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, timeout=10)
     response.raise_for_status()
 
     soup = BeautifulSoup(response.text, "html.parser")
@@ -20,7 +20,7 @@ def get_velobank_rates():
             curr = cols[1].text.strip()
             currency = re.findall("([A-Z]+)", curr)[0]
             buy = cols[2].text.strip()
-            sell = cols[2].text.strip()
+            sell = cols[3].text.strip()
             if currency in ["USD", "EUR", "PLN", "UAH"]:
                 rates[currency] = {"buy": buy, "sell": sell}
 

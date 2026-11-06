@@ -8,7 +8,7 @@ def get_privat24_rates():
     today = datetime.now().strftime("%d.%m.%Y")
     url = f"https://api.privatbank.ua/p24api/exchange_rates?date={today}"
 
-    response = requests.get(url)
+    response = requests.get(url, timeout=10)
     response.raise_for_status()
     data = response.json()
 
